@@ -7,7 +7,6 @@
 #include <string.h>	 //untuk menambahkan fungsi untuk string seperti c_str()
 #include <fstream>	 //untuk keperluan read/write file
 #include <ctime>	 //untuk keperluan tanggal
-#include <cstdlib>
 using namespace std;
 
 ofstream MyFile; //tipe data ini mewakili aliran file output dan digunakan untuk membuat file dan menulis informasi ke file.
@@ -250,8 +249,9 @@ menu:
 		{
 			cout << "File sudah ada , apakah akan menulis ulang? Jika iya, file lama akan hilang" << endl;
 			cout << "(Y/T) : ";
-			cin >> pilihan;
-			while (pilihan == 'y')
+			char pilihan_tmp;
+			cin >> pilihan_tmp;
+			if (pilihan_tmp == 'y')
 			{
 				ofstream MyFile(file.c_str());
 				MyFile << "*****************" << endl;
@@ -260,8 +260,7 @@ menu:
 				cout << "Anda akan lanjut ke halaman utama >>>";
 				Sleep(3000);
 				system("cls");
-				break;
-			}
+			}else{
 			MyFile << "*****************" << endl;
 			MyFile << "* Jam " + jam + " WIB *" << endl;
 			MyFile << "*****************" << endl;
@@ -269,6 +268,7 @@ menu:
 			cout << "Anda akan lanjut ke halaman yang dipilih >>>";
 			Sleep(3000);
 			system("cls");
+			}
 		}
 	}
 
@@ -314,7 +314,7 @@ menu:
 			MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
 			MyFile << "|Anda dapat makan sederhana (pagi & malam) sampai akhir bulan dengan tenang.|\n";
 			uangMknBiasa = uangSisa - hargaMakanMurah * porsiMakanMurah;
-			MyFile << "|Dengan uang sisa Rp" << uangMknBiasa << "\t\t\t\t\t\t\t\t\t\t\t\t\t|" << endl;
+			MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknBiasa) << "\t\t\t\t\t\t\t\t\t\t\t\t\t|" << endl;
 			MyFile << "|___________________________________________________________________________|\n";
 			menabungEmas(uangMknBiasa);
 			MyFile << endl;
@@ -350,7 +350,7 @@ menu:
 				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
 				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
 				uangMknFav = uangSisa - ((hargaMakanMurah * porsiMakanMurah) + (hargaMakanFav * porsiMakanFav));
-				MyFile << "|Dengan uang sisa Rp" << uangMknFav << "\t\t\t\t\t\t\t\t\t\t|" << endl;
+				MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
 				MyFile << "|_______________________________________________________________|\n";
 			}
 			else if (hargaMakanMurah * (porsiMakanMurah - (porsiMakanFav = 1)) + hargaMakanFav * porsiMakanFav <= uangSisa)
@@ -364,7 +364,7 @@ menu:
 				MyFile << "_________________________________________________________________\n";
 				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
 				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
-				MyFile << "|Dengan uang sisa Rp" << uangMknFav << "\t\t\t\t\t\t\t\t\t\t|" << endl;
+				MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
 				MyFile << "|_______________________________________________________________|\n";
 			}
 			else
@@ -447,7 +447,7 @@ menu:
 			MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
 			MyFile << "|Anda dapat makan sederhana (pagi & malam) sampai akhir bulan dengan tenang.|\n";
 			uangMknBiasa = uangSisa - hargaMakanMurah * porsiMakanMurah;
-			MyFile << "|Dengan uang sisa Rp" << uangMknBiasa << "\t\t\t\t\t\t\t\t\t\t\t\t\t|" << endl;
+			MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknBiasa) << "\t\t\t\t\t\t\t\t\t\t\t\t\t|" << endl;
 			MyFile << "|___________________________________________________________________________|\n";
 
 			if (hargaMakanMurah * (porsiMakanMurah - porsiMakanFav) + hargaMakanFav * porsiMakanFav <= uangSisa)
@@ -457,7 +457,7 @@ menu:
 				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
 				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
 				uangMknFav = uangSisa - ((hargaMakanMurah * porsiMakanMurah) + (hargaMakanFav * porsiMakanFav));
-				MyFile << "|Dengan uang sisa Rp" << uangMknFav << "\t\t\t\t\t\t\t\t\t\t|" << endl;
+				MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
 				MyFile << "|_______________________________________________________________|\n";
 			}
 			else if (hargaMakanMurah * (porsiMakanMurah - (porsiMakanFav = 1)) + hargaMakanFav * porsiMakanFav <= uangSisa)
@@ -471,7 +471,7 @@ menu:
 				MyFile << "_________________________________________________________________\n";
 				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
 				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
-				MyFile << "|Dengan uang sisa Rp" << uangMknFav << "\t\t\t\t\t\t\t\t\t\t|" << endl;
+				MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
 				MyFile << "|_______________________________________________________________|\n";
 			}
 			else
