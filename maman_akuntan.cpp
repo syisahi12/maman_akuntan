@@ -14,7 +14,7 @@ ofstream MyFile;									//tipe data ini mewakili aliran file output dan digunak
 
 string tanggal()
 {
-	char buffer [33];
+	char buffer [10];
 	// current date/time based on current system
 	time_t now = time(0);							//time dengan satuan detik dari 1900  ke sekarang dengan GMT
 	tm *ltm = localtime(&now);						//menjadikan GMT ke localtime
@@ -34,7 +34,7 @@ string tanggal()
 
 void tanggalSelisih(string *tanggal, string *bulan, string *tahun, int *selisih)
 {
-	char buffer[33];
+	char buffer[10];
     time_t now = time(0);
 
     tm *ltm = localtime(&now);
@@ -110,7 +110,7 @@ void planKendaraan(int uangBulanan,int jarak,int* uangSisa,int hari=30){
 				hitungBensin *= hargaBensin;
 				MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hitungBensin) << "/Bulan\n";
 				uangBulanan -= hitungBensin;
-				MyFile << formatAngka(uangBulanan) << endl;
+				MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
 				MyFile<<"==========================================================================="<<endl<<endl;
 				*uangSisa = uangBulanan;
 			}
