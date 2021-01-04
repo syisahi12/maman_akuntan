@@ -402,14 +402,22 @@ int main()
 		cin >> porsiMakanFav;
 		if (hargaMakanMurah * (porsiMakanMurah=slsh*2) <= uangSisa)
 		{
-
-			MyFile << "Anda dapat makan sederhana (pagi & malam) sampai akhir bulan dengan tenang.\n";
-			MyFile << "Dengan uang sisa Rp" << uangSisa - hargaMakanMurah * porsiMakanMurah << endl;
+			MyFile << "_____________________________________________________________________________\n";
+			MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
+			MyFile << "|Anda dapat makan sederhana (pagi & malam) sampai akhir bulan dengan tenang.|\n";
+			uangMknBiasa = uangSisa - hargaMakanMurah * porsiMakanMurah;
+			MyFile << "|Dengan uang sisa Rp" << uangMknBiasa<<"\t\t\t\t\t\t\t\t\t\t\t\t\t|" << endl;
+			MyFile << "|___________________________________________________________________________|\n";
+		
 			if (hargaMakanMurah * (porsiMakanMurah - porsiMakanFav) + hargaMakanFav * porsiMakanFav <= uangSisa)
 			{
 				porsiMakanMurah -= porsiMakanFav;
-				MyFile << "Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\n";
-				MyFile << "Dengan uang sisa Rp" << uangSisa - ((hargaMakanMurah * porsiMakanMurah) + (hargaMakanFav * porsiMakanFav)) << endl;
+				MyFile << "_________________________________________________________________\n";
+				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
+				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
+				uangMknFav = uangSisa - ((hargaMakanMurah * porsiMakanMurah) + (hargaMakanFav * porsiMakanFav));
+				MyFile << "|Dengan uang sisa Rp" << uangMknFav << "\t\t\t\t\t\t\t\t\t\t|" <<endl;
+				MyFile << "|_______________________________________________________________|\n";
 			}
 			else if (hargaMakanMurah * (porsiMakanMurah - (porsiMakanFav = 1)) + hargaMakanFav * porsiMakanFav <= uangSisa)
 			{
@@ -419,8 +427,11 @@ int main()
 				}
 				porsiMakanFav -= 1;
 				uangSisa -= (hargaMakanMurah * (porsiMakanMurah -= porsiMakanFav)) + (hargaMakanFav * porsiMakanFav);
-				MyFile << "Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\n";
-				MyFile << "Dengan uang sisa Rp" << uangSisa << endl;
+				MyFile << "_________________________________________________________________\n";
+				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
+				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
+				MyFile << "|Dengan uang sisa Rp" << uangMknFav << "\t\t\t\t\t\t\t\t\t\t|" << endl;
+				MyFile << "|_______________________________________________________________|\n";
 			}
 			else
 			{
