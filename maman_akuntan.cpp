@@ -10,7 +10,7 @@
 #include <cstdlib>
 using namespace std;
 
-ofstream MyFile;										//tipe data ini mewakili aliran file output dan digunakan untuk membuat file dan menulis informasi ke file.
+ofstream MyFile;									//tipe data ini mewakili aliran file output dan digunakan untuk membuat file dan menulis informasi ke file.
 
 string tanggal()
 {
@@ -218,7 +218,7 @@ int main()
 		if (pilihan == 'Y' || pilihan == 'y')
 		{
 		nitih1:
-			cout << "Harga bensin Pertalite sekarang = ";
+			cout << "Harga bensin yang kamu pakai sekarang = ";
 			cin >> hargaBensin;
 			cout << "Motor / Mobil = ";
 			cin >> kendaraan;
