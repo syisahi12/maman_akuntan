@@ -157,12 +157,16 @@ int main()
 	system("cls");
 
 	cout << "Tanggal : " << tanggal() << endl;				//memunculkan tanggal sekarang
-
+	ifstream lihatFile;
+	lihatFile.open(file.c_str());
 	MyFile.open(file.c_str(), ios_base::app);				//membuka file tanggal sekarang
-	if (!MyFile)											//kondisi jika  file tidak ada
+	if (!lihatFile)											//kondisi jika  file tidak ada
 	{
-		cout << "File tidak ditemukan";
-		cout << "Membuat file baru";
+		cout << "File tidak ditemukan\n";
+		cout << "Membuat file baru\n";
+		cout << "Menunggu proses pembuatan file baru...";
+		Sleep(1000);
+		system("cls");
 		ofstream MyFile(file.c_str(), ios_base::app);		//maka akan membuat file pada tanggal sekarang
 	} else {
 		cout<<"File sudah ada , apakah akan menulis ulang? Jika iya, file lama akan hilang"<<endl;
@@ -186,6 +190,7 @@ int main()
 			system("cls");
 	}
 	menu:
+	cout << "Tanggal : " << tanggal() << endl;
 	cout << "=====================" << endl;
 	cout << "|===MAMAN AKUNTAN===|" << endl;
 	cout << "|====KELOMPOK X=====|" << endl;
@@ -204,6 +209,7 @@ int main()
 	{
 	case '1':
 		system("cls");
+		cout << "Tanggal : " << tanggal() << endl;
 		cout << "Kamu Berada Di Menu -> Plan 1 Bulan" << endl
 			 << endl;
 		Sleep(1000);
@@ -265,6 +271,7 @@ int main()
 		system("cls");
 
 		// Planning Makanan
+		cout << "Tanggal : " << tanggal() << endl;
 		cout << "Harga menu termurah = ";
 		cin >> hargaMakanMurah;
 		cout << "Harga menu favorite = ";
