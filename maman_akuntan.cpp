@@ -302,6 +302,8 @@ int main()
 			{
 				menabungReksaDana(uangMknBiasa);
 				MyFile<<endl;
+			}else{
+				MyFile<<"Uang sisa kamu tidak bisa untuk menabung Reksadana (Minimal Rp100.000)"<<endl;
 			}
 			
 			if (uangMknBiasa>=200000)
@@ -309,7 +311,10 @@ int main()
 				menabungSaham(uangMknBiasa);
 				MyFile<<endl;
 				MyFile<<"==========================================================================="<<endl<<endl;
+			}else{
+				MyFile<<"Uang sisa kamu tidak bisa untuk menabung Saham (Minimal Rp200.000)"<<endl;
 			}
+			MyFile<<"==========================================================================="<<endl<<endl;
 			
 
 			if (hargaMakanMurah * (porsiMakanMurah - porsiMakanFav) + hargaMakanFav * porsiMakanFav <= uangSisa)
@@ -347,13 +352,18 @@ int main()
 			{
 				menabungReksaDana(uangMknFav);
 				MyFile<<endl;
+			}else{
+				MyFile<<"Uang sisa kamu tidak bisa untuk menabung Reksadana (Minimal Rp100.000)"<<endl;
 			}
 			
 			if (uangMknFav>=200000)
 			{
 				menabungSaham(uangMknFav);
 				MyFile<<endl;
+			}else{
+				MyFile<<"Uang sisa kamu tidak bisa untuk menabung Saham (Minimal Rp200.000)"<<endl;
 			}
+			MyFile<<"==========================================================================="<<endl<<endl;
 		}
 		else
 		{
