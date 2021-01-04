@@ -75,6 +75,52 @@ string formatAngka(int angka, string perantara = ".")
 	return output;								//mengembalikan  nilai output yang sudah di insert value dari variable perantara
 }
 
+void planKendaraan(int uangBulanan,int jarak,int* uangSisa,int hari=30){
+			int hitungBensin, hargaBensin,jmlMinggu;
+			string kendaraan;
+			jmlMinggu = hari/7;
+	nitih1:
+			cout << "Harga bensin yang kamu pakai sekarang = ";
+			cin >> hargaBensin;
+			cout << "Motor / Mobil = ";
+			cin >> kendaraan;
+			if (kendaraan == "Motor" || kendaraan == "motor")
+			{
+
+				// menulis ke file
+				MyFile << "Info: Anda mengendarai motor dengan 1L BBM = 50KM\n";
+				MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
+				hitungBensin = jarak * 2 * (hari-jmlMinggu) / 50;
+				MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP 1 bulan\n";
+				hitungBensin *= hargaBensin;
+				MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hitungBensin) << "/Bulan\n";
+				uangBulanan -= hitungBensin;
+				MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
+				MyFile<<"==========================================================================="<<endl<<endl;
+				*uangSisa = uangBulanan;
+			}
+			else if (kendaraan == "Mobil" || kendaraan == "mobil")
+			{
+
+				// menulis ke file
+				MyFile << "Info: Anda mengendarai motor dengan 1L BBM = 15KM\n";
+				MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
+				hitungBensin = jarak * 2 * hari / 15;
+				MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP kampus 1bulan\n";
+				hitungBensin *= hargaBensin;
+				MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hitungBensin) << "/Bulan\n";
+				uangBulanan -= hitungBensin;
+				MyFile << formatAngka(uangBulanan) << endl;
+				MyFile<<"==========================================================================="<<endl<<endl;
+				*uangSisa = uangBulanan;
+			}
+			else
+			{
+				cout << "Maaf kendaraan yang anda inputkan salah.Silahkan coba lagi.\n\n";
+				goto nitih1;
+			}
+}
+
 int menabungEmas(int uangSisa){
 	int jml=0, perbln=uangSisa,tot=0;
     float bga=0;
@@ -147,12 +193,12 @@ int menabungSaham(int uangSisa){
 
 int main()
 {
-	int uangBulanan = 0, hitungBensin, hargaBensin, hargaBensinTotal, hargaMakanMurah, hargaMakanFav, 
+	int uangBulanan = 0, hargaMakanMurah, hargaMakanFav, 
 					  hargaMakanTotal, uangSisa, porsiMakanMurah = 60, porsiMakanFav,slsh,uangMknFav,
 					  uangMknBiasa;
 	float jarak = 0;
 	char pilihan;
-	string kendaraan, file = tanggal() + ".txt",h,b,t;
+	string file = tanggal() + ".txt",h,b,t;
 
 	system("cls");
 
@@ -223,44 +269,7 @@ int main()
 		cin >> pilihan;
 		if (pilihan == 'Y' || pilihan == 'y')
 		{
-		nitih1:
-			cout << "Harga bensin yang kamu pakai sekarang = ";
-			cin >> hargaBensin;
-			cout << "Motor / Mobil = ";
-			cin >> kendaraan;
-			if (kendaraan == "Motor" || kendaraan == "motor")
-			{
-
-				// menulis ke file
-				MyFile << "Info: Anda mengendarai motor dengan 1L BBM = 50KM\n";
-				MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
-				hitungBensin = jarak * 2 * 26 / 50;
-				hargaBensinTotal = hitungBensin * hargaBensin;
-				MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP 1 bulan\n";
-				MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hargaBensinTotal) << "/Bulan\n";
-				uangSisa = uangBulanan - hargaBensinTotal;
-				MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangSisa) << endl;
-				MyFile<<"==========================================================================="<<endl<<endl;
-			}
-			else if (kendaraan == "Mobil" || kendaraan == "mobil")
-			{
-
-				// menulis ke file
-				MyFile << "Info: Anda mengendarai motor dengan 1L BBM = 15KM\n";
-				MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
-				hitungBensin = jarak * 2 * 26 / 15;
-				hargaBensinTotal = hitungBensin * hargaBensin;
-				MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP kampus 1bulan\n";
-				MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hargaBensinTotal) << "/Bulan\n";
-				uangSisa = uangBulanan - hargaBensinTotal;
-				MyFile << formatAngka(uangSisa) << endl;
-				MyFile<<"==========================================================================="<<endl<<endl;
-			}
-			else
-			{
-				cout << "Maaf kendaraan yang anda inputkan salah.Silahkan coba lagi.\n\n";
-				goto nitih1;
-			}
+			planKendaraan(uangBulanan,jarak,&uangSisa);
 		}
 		else
 		{
@@ -374,42 +383,7 @@ int main()
 		cin >> pilihan;
 		if (pilihan == 'Y' || pilihan == 'y')
 		{
-		nitih2:
-			cout << "Harga bensin Pertalite sekarang = ";
-			cin >> hargaBensin;
-			cout << "Motor / Mobil = ";
-			cin >> kendaraan;
-			if (kendaraan == "Motor" || kendaraan == "motor")
-			{
-
-				// menulis ke file
-				MyFile << "\nInfo: Anda mengendarai motor dengan 1L BBM = 50KM\n";
-				MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
-				hitungBensin = jarak * 2 * slsh / 50;
-				hargaBensinTotal = hitungBensin * hargaBensin;
-				MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP 1 bulan\n";
-				MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hargaBensinTotal) << "/Bulan\n";
-				uangSisa = uangBulanan - hargaBensinTotal;
-				MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangSisa) << endl;
-			}
-			else if (kendaraan == "Mobil" || kendaraan == "mobil")
-			{
-
-				// menulis ke file
-				MyFile << "Info: Anda mengendarai motor dengan 1L BBM = 15KM\n";
-				MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
-				hitungBensin = jarak * 2 * slsh / 15;
-				hargaBensinTotal = hitungBensin * hargaBensin;
-				MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP kampus 1bulan\n";
-				MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hargaBensinTotal) << "/Bulan\n";
-				uangSisa = uangBulanan - hargaBensinTotal;
-				MyFile << formatAngka(uangSisa) << endl;
-			}
-			else
-			{
-				cout << "Maaf kendaraan yang anda inputkan salah.Silahkan coba lagi.\n\n";
-				goto nitih2;
-			}
+		planKendaraan(uangBulanan,jarak,&uangSisa,slsh);
 		}
 		else
 		{
