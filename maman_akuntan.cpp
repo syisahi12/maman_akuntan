@@ -505,7 +505,9 @@ menu:
 		cout << "|8. sebutkan berapa kali anda ingin makan makanan tervaforit anda                                                          |" << endl;
 		cout << "|9. data bisa di lihat di .txt                                                                                             |" << endl;
 		cout << "============================================================================================================================" << endl;
-
+		cout << "Untuk kembali ke menu. Tekan (Enter)" << endl;
+		getch();
+		goto menu;
 		break;
 	}
 }
