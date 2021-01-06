@@ -367,6 +367,7 @@ void funcPlanning(string h, string b, string t, int slsh, string file, string sk
 		system("cls");
 
 		// Planning Makanan
+		cout << "Tanggal : " << skrg << endl;
 		cout << "Harga menu termurah = ";
 		cin >> hargaMakanMurah;
 		cout << "Harga menu favorite = ";
