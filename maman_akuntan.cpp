@@ -80,7 +80,8 @@ string formatAngka(int angka, string perantara = ".")
 
 void planKendaraan(int uangBulanan, int jarak, int *uangSisa, int hari = 30)
 {
-	int hitungBensin, hargaBensin, jmlMinggu;
+	int jmlMinggu;
+	float hitungBensin, hargaBensin;
 	string kendaraan;
 	jmlMinggu = hari / 7;
 	cout << "Harga bensin yang kamu pakai sekarang = ";
@@ -94,14 +95,25 @@ nitih1:
 		// menulis ke file
 		MyFile << "Info: Anda mengendarai motor dengan 1L BBM = 50KM\n";
 		MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
-		hitungBensin = jarak * 2 * (hari - jmlMinggu) / 50;
+		hitungBensin = (jarak * 2 * (hari - jmlMinggu)) / 50;
 		MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP 1 bulan\n";
 		hitungBensin *= hargaBensin;
 		MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hitungBensin) << "/Bulan\n";
-		uangBulanan -= hitungBensin;
-		MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
-		MyFile << "===========================================================================" << endl
-			   << endl;
+		if (uangBulanan >= hitungBensin)
+		{
+			uangBulanan -= hitungBensin;
+			MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
+			MyFile << "===========================================================================" << endl
+				   << endl;
+		}
+		else if (uangBulanan <= hitungBensin)
+		{
+			uangBulanan -= hitungBensin;
+			MyFile << "Uang bulanan anda tidak cukup untuk membeli bensin selama 1bulan PP kampus.\nAnda harus menambah Rp" << formatAngka(uangBulanan * -1) << endl;
+			MyFile << "===========================================================================" << endl
+				   << endl;
+		}
+
 		*uangSisa = uangBulanan;
 	}
 	else if (kendaraan == "Mobil" || kendaraan == "mobil")
@@ -115,9 +127,18 @@ nitih1:
 		hitungBensin *= hargaBensin;
 		MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hitungBensin) << "/Bulan\n";
 		uangBulanan -= hitungBensin;
-		MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
-		MyFile << "===========================================================================" << endl
-			   << endl;
+		if (uangBulanan >= hitungBensin)
+		{
+			MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
+			MyFile << "===========================================================================" << endl
+				   << endl;
+		}
+		else if (uangBulanan <= hitungBensin)
+		{
+			MyFile << "Uang bulanan anda tidak cukup untuk membeli bensin selama 1bulan PP kampus.\nAnda harus menambah Rp" << formatAngka(uangBulanan * -1) << endl;
+			MyFile << "===========================================================================" << endl
+				   << endl;
+		}
 		*uangSisa = uangBulanan;
 	}
 	else
@@ -202,7 +223,7 @@ int menabungSaham(int uangSisa)
 
 int main()
 {
-	int uangBulanan = 0, hargaMakanMurah, hargaMakanFav,
+	int uangBulanan = 0, hargaMakanMurah = 6500, hargaMakanFav,
 		hargaMakanTotal, uangSisa, porsiMakanMurah = 60, porsiMakanFav, slsh, uangMknFav,
 		uangMknBiasa;
 	float jarak = 0;
@@ -277,6 +298,7 @@ menu:
 	switch (pilihan)
 	{
 	case '1':
+	pilihan1:
 		system("cls");
 		cout << "Tanggal : " << skrg << endl;
 		cout << "Kamu Berada Di Menu -> Plan 1 Bulan" << endl
@@ -286,6 +308,16 @@ menu:
 		// Planning Transportasi
 		cout << "Input uang saku bulanan = ";
 		cin >> uangBulanan;
+		cout << "Apakah benar uang bulanan anda sebesar Rp" << formatAngka(uangBulanan) << " ?" << endl;
+		cout << "(Y/T) = ";
+		cin >> pilihan;
+		if (pilihan == 'T' || pilihan == 't')
+		{
+			cout << "Silahkan input kembali uang bulanan anda dengan benar!" << endl;
+			Sleep(1500);
+			goto pilihan1;
+		}
+
 		cout << "Input jarak tempat tinggal ke kampus (KM) = ";
 		cin >> jarak;
 		cout << "Apakah anda mengendarai kendaraan bermotor ke kampus? (Y/T) = ";
@@ -298,116 +330,131 @@ menu:
 		{
 			cout << "Kamu bebas uang BBM\n";
 		}
-		cout << "Anda akan lanjut ke halaman planing makanan >>>";
-		Sleep(3000);
-		system("cls");
 
-		// Planning Makanan
-		cout << "Tanggal : " << skrg << endl;
-		cout << "Harga menu termurah = ";
-		cin >> hargaMakanMurah;
-		cout << "Harga menu favorite = ";
-		cin >> hargaMakanFav;
-		cout << "Mau berapa kali memakan makanan favorite? = ";
-		cin >> porsiMakanFav;
-		if (hargaMakanMurah * porsiMakanMurah <= uangSisa)
+		if (uangSisa > 0)
 		{
-			MyFile << "_____________________________________________________________________________\n";
-			MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
-			MyFile << "|Anda dapat makan sederhana (pagi & malam) sampai akhir bulan dengan tenang.|\n";
-			uangMknBiasa = uangSisa - hargaMakanMurah * porsiMakanMurah;
-			MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknBiasa) << "\t\t\t\t\t\t\t\t\t\t\t\t\t|" << endl;
-			MyFile << "|___________________________________________________________________________|\n";
-			menabungEmas(uangMknBiasa);
-			MyFile << endl;
+			cout << "Anda akan lanjut ke halaman planing makanan >>>";
+			Sleep(3000);
+			system("cls");
 
-			if (uangMknBiasa >= 100000)
+			// Planning Makanan
+			cout << "Tanggal : " << skrg << endl;
+			cout << "Harga menu termurah = ";
+			cin >> hargaMakanMurah;
+			cout << "Harga menu favorite = ";
+			cin >> hargaMakanFav;
+			cout << "Mau berapa kali memakan makanan favorite? = ";
+			cin >> porsiMakanFav;
+			if (hargaMakanMurah * porsiMakanMurah <= uangSisa)
 			{
-				menabungReksaDana(uangMknBiasa);
+				MyFile << "_____________________________________________________________________________\n";
+				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
+				MyFile << "|Anda dapat makan sederhana (pagi & malam) sampai akhir bulan dengan tenang.|\n";
+				uangMknBiasa = uangSisa - hargaMakanMurah * porsiMakanMurah;
+				MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknBiasa) << "\t\t\t\t\t\t\t\t\t\t\t\t\t|" << endl;
+				MyFile << "|___________________________________________________________________________|\n";
+				menabungEmas(uangMknBiasa);
 				MyFile << endl;
-			}
-			else
-			{
-				MyFile << "Uang sisa kamu tidak bisa untuk menabung Reksadana (Minimal Rp100.000)" << endl;
-			}
 
-			if (uangMknBiasa >= 200000)
-			{
-				menabungSaham(uangMknBiasa);
+				if (uangMknBiasa >= 100000)
+				{
+					menabungReksaDana(uangMknBiasa);
+					MyFile << endl;
+				}
+				else
+				{
+					MyFile << "Uang sisa kamu tidak bisa untuk menabung Reksadana (Minimal Rp100.000)" << endl;
+				}
+
+				if (uangMknBiasa >= 200000)
+				{
+					menabungSaham(uangMknBiasa);
+					MyFile << endl;
+					MyFile << "===========================================================================" << endl
+						   << endl;
+				}
+				else
+				{
+					MyFile << "Uang sisa kamu tidak bisa untuk menabung Saham (Minimal Rp200.000)" << endl;
+				}
+				MyFile << "===========================================================================" << endl
+					   << endl;
+
+				if (hargaMakanMurah * (porsiMakanMurah - porsiMakanFav) + hargaMakanFav * porsiMakanFav <= uangSisa)
+				{
+					porsiMakanMurah -= porsiMakanFav;
+					MyFile << "_________________________________________________________________\n";
+					MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
+					MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
+					uangMknFav = uangSisa - ((hargaMakanMurah * porsiMakanMurah) + (hargaMakanFav * porsiMakanFav));
+					MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
+					MyFile << "|_______________________________________________________________|\n";
+				}
+				else if (hargaMakanMurah * (porsiMakanMurah - (porsiMakanFav = 1)) + hargaMakanFav * porsiMakanFav <= uangSisa)
+				{
+					while ((hargaMakanMurah * (porsiMakanMurah - porsiMakanFav)) + (hargaMakanFav * porsiMakanFav) <= uangSisa)
+					{
+						porsiMakanFav++;
+					}
+					porsiMakanFav -= 1;
+					uangMknFav = uangSisa - (hargaMakanMurah * (porsiMakanMurah -= porsiMakanFav)) + (hargaMakanFav * porsiMakanFav);
+					MyFile << "_________________________________________________________________\n";
+					MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
+					MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
+					MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
+					MyFile << "|_______________________________________________________________|\n";
+				}
+				else
+				{
+					MyFile << "Anda tidak bisa makan favorit";
+				}
+
+				menabungEmas(uangMknFav);
 				MyFile << endl;
+				if (uangMknFav >= 100000)
+				{
+					menabungReksaDana(uangMknFav);
+					MyFile << endl;
+				}
+				else
+				{
+					MyFile << "Uang sisa kamu tidak bisa untuk menabung Reksadana (Minimal Rp100.000)" << endl;
+				}
+
+				if (uangMknFav >= 200000)
+				{
+					menabungSaham(uangMknFav);
+					MyFile << endl;
+				}
+				else
+				{
+					MyFile << "Uang sisa kamu tidak bisa untuk menabung Saham (Minimal Rp200.000)" << endl;
+				}
 				MyFile << "===========================================================================" << endl
 					   << endl;
 			}
 			else
 			{
-				MyFile << "Uang sisa kamu tidak bisa untuk menabung Saham (Minimal Rp200.000)" << endl;
+				MyFile << "Uang anda tidak cukup untuk makan 1 bulan\n";
+				MyFile << "Uang sisa Rp" << uangSisa << " Hanya cukup untuk makan sederhana (pagi & malam) selama " << uangSisa / hargaMakanMurah / 2 << " hari" << endl;
+				MyFile << "Untuk bisa makan (pagi & malam) 1 bulan, maka harus menambah uang sebanyak Rp" << hargaMakanMurah * 60 - uangSisa << endl;
 			}
-			MyFile << "===========================================================================" << endl
-				   << endl;
-
-			if (hargaMakanMurah * (porsiMakanMurah - porsiMakanFav) + hargaMakanFav * porsiMakanFav <= uangSisa)
-			{
-				porsiMakanMurah -= porsiMakanFav;
-				MyFile << "_________________________________________________________________\n";
-				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
-				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
-				uangMknFav = uangSisa - ((hargaMakanMurah * porsiMakanMurah) + (hargaMakanFav * porsiMakanFav));
-				MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
-				MyFile << "|_______________________________________________________________|\n";
-			}
-			else if (hargaMakanMurah * (porsiMakanMurah - (porsiMakanFav = 1)) + hargaMakanFav * porsiMakanFav <= uangSisa)
-			{
-				while ((hargaMakanMurah * (porsiMakanMurah - porsiMakanFav)) + (hargaMakanFav * porsiMakanFav) <= uangSisa)
-				{
-					porsiMakanFav++;
-				}
-				porsiMakanFav -= 1;
-				uangMknFav = uangSisa - (hargaMakanMurah * (porsiMakanMurah -= porsiMakanFav)) + (hargaMakanFav * porsiMakanFav);
-				MyFile << "_________________________________________________________________\n";
-				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
-				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
-				MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
-				MyFile << "|_______________________________________________________________|\n";
-			}
-			else
-			{
-				MyFile << "Anda tidak bisa makan favorit";
-			}
-
-			menabungEmas(uangMknFav);
-			MyFile << endl;
-			if (uangMknFav >= 100000)
-			{
-				menabungReksaDana(uangMknFav);
-				MyFile << endl;
-			}
-			else
-			{
-				MyFile << "Uang sisa kamu tidak bisa untuk menabung Reksadana (Minimal Rp100.000)" << endl;
-			}
-
-			if (uangMknFav >= 200000)
-			{
-				menabungSaham(uangMknFav);
-				MyFile << endl;
-			}
-			else
-			{
-				MyFile << "Uang sisa kamu tidak bisa untuk menabung Saham (Minimal Rp200.000)" << endl;
-			}
-			MyFile << "===========================================================================" << endl
-				   << endl;
+			MyFile.close();
+			cout << "\nSilahkan cek data output anda di -> " << file << endl;
 		}
 		else
 		{
-			MyFile << "Uang anda tidak cukup untuk makan 1 bulan\n";
-			MyFile << "Uang sisa Rp" << uangSisa << " Hanya cukup untuk makan sederhana (pagi & malam) selama " << uangSisa / hargaMakanMurah / 2 << " hari" << endl;
-			MyFile << "Untuk bisa makan (pagi & malam) 1 bulan, maka harus menambah uang sebanyak Rp" << hargaMakanMurah * 60 - uangSisa << endl;
+			MyFile << "Karena uang anda tidak cukup untuk membeli BBM , maka uang anda tidak cukup untuk makan 1 bulan\n";
+			MyFile << "Uang anda minus Rp" << formatAngka(uangSisa) << endl;
+			MyFile << "Untuk bisa makan (pagi & malam) 1 bulan, dan memenuhi kebutuhan BBM.Maka harus menambah uang sebanyak Rp" << formatAngka(hargaMakanMurah * 60 - uangSisa) << endl;
+			MyFile << "Dengan menu makanan harga terendah Rp6.500";
+			MyFile.close();
+			cout << "\nSilahkan cek data output anda di -> " << file << endl;
 		}
-		MyFile.close();
-		cout << "\nSilahkan cek data output anda di -> " << file << endl;
+
 		break;
 	case '2':
+	pilihan2:
 		system("cls");
 		tanggalSelisih(&h, &b, &t, &slsh);
 		cout << "Kamu Berada Di Menu -> Plan Darurat" << endl
@@ -420,6 +467,15 @@ menu:
 		// Planning Transportasi
 		cout << "Input uang saku saat ini = ";
 		cin >> uangBulanan;
+		cout << "Apakah benar uang bulanan anda sebesar Rp" << formatAngka(uangBulanan) << " ?" << endl;
+		cout << "(Y/T) = ";
+		cin >> pilihan;
+		if (pilihan == 'T' || pilihan == 't')
+		{
+			cout << "Silahkan input kembali uang bulanan anda dengan benar!" << endl;
+			Sleep(1500);
+			goto pilihan2;
+		}
 		cout << "Input jarak tempat tinggal ke kampus (KM) = ";
 		cin >> jarak;
 		cout << "Apakah anda mengendarai kendaraan bermotor ke kampus? (Y/T) = ";
@@ -432,63 +488,77 @@ menu:
 		{
 			cout << "Kamu bebas uang BBM\n";
 		}
-		cout << "Anda akan lanjut ke halaman planing makanan >>>";
-		Sleep(3000);
-		system("cls");
-
-		// Planning Makanan
-		cout << "Harga menu termurah = ";
-		cin >> hargaMakanMurah;
-		cout << "Harga menu favorite = ";
-		cin >> hargaMakanFav;
-		cout << "Mau berapa kali memakan makanan favorite? = ";
-		cin >> porsiMakanFav;
-		if (hargaMakanMurah * (porsiMakanMurah = slsh * 2) <= uangSisa)
+		if (uangSisa > 0)
 		{
-			MyFile << "_____________________________________________________________________________\n";
-			MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
-			MyFile << "|Anda dapat makan sederhana (pagi & malam) sampai akhir bulan dengan tenang.|\n";
-			uangMknBiasa = uangSisa - hargaMakanMurah * porsiMakanMurah;
-			MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknBiasa) << "\t\t\t\t\t\t\t\t\t\t\t\t\t|" << endl;
-			MyFile << "|___________________________________________________________________________|\n";
+			cout << "Anda akan lanjut ke halaman planing makanan >>>";
+			Sleep(3000);
+			system("cls");
 
-			if (hargaMakanMurah * (porsiMakanMurah - porsiMakanFav) + hargaMakanFav * porsiMakanFav <= uangSisa)
+			// Planning Makanan
+			cout << "Harga menu termurah = ";
+			cin >> hargaMakanMurah;
+			cout << "Harga menu favorite = ";
+			cin >> hargaMakanFav;
+			cout << "Mau berapa kali memakan makanan favorite? = ";
+			cin >> porsiMakanFav;
+			if (hargaMakanMurah * (porsiMakanMurah = slsh * 2) <= uangSisa)
 			{
-				porsiMakanMurah -= porsiMakanFav;
-				MyFile << "_________________________________________________________________\n";
-				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
-				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
-				uangMknFav = uangSisa - ((hargaMakanMurah * porsiMakanMurah) + (hargaMakanFav * porsiMakanFav));
-				MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
-				MyFile << "|_______________________________________________________________|\n";
-			}
-			else if (hargaMakanMurah * (porsiMakanMurah - (porsiMakanFav = 1)) + hargaMakanFav * porsiMakanFav <= uangSisa)
-			{
-				while ((hargaMakanMurah * (porsiMakanMurah - porsiMakanFav)) + (hargaMakanFav * porsiMakanFav) <= uangSisa)
+				MyFile << "_____________________________________________________________________________\n";
+				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
+				MyFile << "|Anda dapat makan sederhana (pagi & malam) sampai akhir bulan dengan tenang.|\n";
+				uangMknBiasa = uangSisa - hargaMakanMurah * porsiMakanMurah;
+				MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknBiasa) << "\t\t\t\t\t\t\t\t\t\t\t\t\t|" << endl;
+				MyFile << "|___________________________________________________________________________|\n";
+
+				if (hargaMakanMurah * (porsiMakanMurah - porsiMakanFav) + hargaMakanFav * porsiMakanFav <= uangSisa)
 				{
-					porsiMakanFav++;
+					porsiMakanMurah -= porsiMakanFav;
+					MyFile << "_________________________________________________________________\n";
+					MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
+					MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
+					uangMknFav = uangSisa - ((hargaMakanMurah * porsiMakanMurah) + (hargaMakanFav * porsiMakanFav));
+					MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
+					MyFile << "|_______________________________________________________________|\n";
 				}
-				porsiMakanFav -= 1;
-				uangSisa -= (hargaMakanMurah * (porsiMakanMurah -= porsiMakanFav)) + (hargaMakanFav * porsiMakanFav);
-				MyFile << "_________________________________________________________________\n";
-				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
-				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
-				MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
-				MyFile << "|_______________________________________________________________|\n";
+				else if (hargaMakanMurah * (porsiMakanMurah - (porsiMakanFav = 1)) + hargaMakanFav * porsiMakanFav <= uangSisa)
+				{
+					while ((hargaMakanMurah * (porsiMakanMurah - porsiMakanFav)) + (hargaMakanFav * porsiMakanFav) <= uangSisa)
+					{
+						porsiMakanFav++;
+					}
+					porsiMakanFav -= 1;
+					uangSisa -= (hargaMakanMurah * (porsiMakanMurah -= porsiMakanFav)) + (hargaMakanFav * porsiMakanFav);
+					MyFile << "_________________________________________________________________\n";
+					MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
+					MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
+					MyFile << "|Dengan uang sisa Rp" << formatAngka(uangMknFav) << "\t\t\t\t\t\t\t\t\t\t|" << endl;
+					MyFile << "|_______________________________________________________________|\n";
+				}
+				else
+				{
+					MyFile << "Anda tidak bisa makan favorit";
+				}
 			}
 			else
 			{
-				MyFile << "Anda tidak bisa makan favorit";
+				MyFile << "Uang anda tidak cukup untuk makan 1 bulan\n";
+				MyFile << "Uang sisa Rp" << uangSisa << " Hanya cukup untuk makan sederhana (pagi & malam) selama " << uangSisa / hargaMakanMurah / 2 << " hari" << endl;
+				MyFile << "Untuk bisa makan (pagi & malam) 1 bulan, maka harus menambah uang sebanyak Rp" << hargaMakanMurah * 60 - uangSisa << endl;
+				MyFile << "Dengan menu makanan harga terendah Rp"<<formatAngka(hargaMakanMurah);
 			}
+			MyFile.close();
+			cout << "\nSilahkan cek data output anda di -> " << file << endl;
 		}
 		else
 		{
-			MyFile << "Uang anda tidak cukup untuk makan hingga akhir bulan\n";
-			MyFile << "Uang sisa Rp" << formatAngka(uangSisa) << " Hanya cukup untuk makan sederhana (pagi & malam) selama " << uangSisa / hargaMakanMurah / 2 << " hari" << endl;
-			MyFile << "Untuk bisa makan (pagi & malam) hingga akhir bulan, maka harus menambah uang sebanyak Rp" << formatAngka(hargaMakanMurah * (slsh * 2) - uangSisa) << endl;
+			MyFile << "Karena uang anda tidak cukup untuk membeli BBM , maka uang anda tidak cukup untuk makan 1 bulan\n";
+			MyFile << "Uang anda minus Rp" << formatAngka(uangSisa) << endl;
+			MyFile << "Untuk bisa makan (pagi & malam) 1 bulan, dan memenuhi kebutuhan BBM.Maka harus menambah uang sebanyak Rp" << formatAngka(hargaMakanMurah * 60 - uangSisa) << endl;
+			MyFile << "Dengan menu makanan harga terendah Rp"<<formatAngka(hargaMakanMurah);
+			MyFile.close();
+			cout << "\nSilahkan cek data output anda di -> " << file << endl;
 		}
-		MyFile.close();
-		cout << "\nSilahkan cek data output anda di -> " << file << endl;
+
 		break;
 
 	case '3':
