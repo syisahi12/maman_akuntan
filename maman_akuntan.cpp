@@ -83,9 +83,9 @@ void planKendaraan(int uangBulanan, int jarak, int *uangSisa, int hari = 30)
 	int hitungBensin, hargaBensin, jmlMinggu;
 	string kendaraan;
 	jmlMinggu = hari / 7;
-nitih1:
 	cout << "Harga bensin yang kamu pakai sekarang = ";
 	cin >> hargaBensin;
+nitih1:
 	cout << "Motor / Mobil = ";
 	cin >> kendaraan;
 	if (kendaraan == "Motor" || kendaraan == "motor")
@@ -260,14 +260,16 @@ menu:
 				cout << "Anda akan lanjut ke halaman utama >>>";
 				Sleep(3000);
 				system("cls");
-			}else{
-			MyFile << "*****************" << endl;
-			MyFile << "* Jam " + jam + " WIB *" << endl;
-			MyFile << "*****************" << endl;
+			}
+			else
+			{
+				MyFile << "*****************" << endl;
+				MyFile << "* Jam " + jam + " WIB *" << endl;
+				MyFile << "*****************" << endl;
 
-			cout << "Anda akan lanjut ke halaman yang dipilih >>>";
-			Sleep(3000);
-			system("cls");
+				cout << "Anda akan lanjut ke halaman yang dipilih >>>";
+				Sleep(3000);
+				system("cls");
 			}
 		}
 	}
