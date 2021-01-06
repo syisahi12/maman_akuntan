@@ -1,5 +1,5 @@
-#include <iostream>
-#include <stdio.h>
+#include <iostream>  //
+#include <stdio.h>	 //
 #include <stdlib.h>	 //untuk fungsi command yang berkaitan dengan CMD (command prompt) seperti "cls"
 #include <conio.h>	 //untuk fungsi Sleep()
 #include <windows.h> //untuk fungsi Sleep()
@@ -16,7 +16,7 @@ int uangBulanan = 0, hargaMakanMurah = 6500, hargaMakanFav,
 float jarak = 0;
 char pilihan;
 
-void tanggal(string *skrg, string *jam)
+void tanggal(string *skrg, string *jam) //Syifa
 {
 	char buffer[10];
 	// current date/time based on current system
@@ -36,13 +36,13 @@ void tanggal(string *skrg, string *jam)
 	string hour_tmp = itoa(hour, buffer, 10);
 	string min_tmp = itoa(min, buffer, 10);
 
-	string sekarang_tmp = tanggal + "-" + bulan + "-" + tahun;
-	string jam_tmp = hour_tmp + ":" + min_tmp;
+	string sekarang_tmp = tanggal + "-" + bulan + "-" + tahun; //18-06-2002
+	string jam_tmp = hour_tmp + ":" + min_tmp; //18:00
 	*skrg = sekarang_tmp;
 	*jam = jam_tmp;
 }
 
-void tanggalSelisih(string *tanggal, string *bulan, string *tahun, int *selisih)
+void tanggalSelisih(string *tanggal, string *bulan, string *tahun, int *selisih) //syifa
 {
 	char buffer[10];
 	time_t now = time(0);
@@ -58,9 +58,9 @@ void tanggalSelisih(string *tanggal, string *bulan, string *tahun, int *selisih)
 		int tglSelisih = 60 * 60 * 24 * i; //Merubah hari ke satuan detik
 		time_t now = time(0) + tglSelisih; //Menambahkan satuan detik hari yang akan datang ke waktu sekarang
 		tm *ltm = localtime(&now);		   //Mencari tanggal dari variable "now" dimana itu adalah mencari selisih tanggal ke akhir bulan
-		day = ltm->tm_mday;				   //Menjadikan satuan detik ke tanggal
-		mon = 1 + ltm->tm_mon;			   //Menjadikan satuan detik ke bulan
-		year = 1900 + ltm->tm_year;		   //Menjadikan satuan detik ke tahun
+		day = ltm->tm_mday;	//29,30,31,1			   //Menjadikan satuan detik ke tanggal
+		mon = 1 + ltm->tm_mon;	//jan,feb		   //Menjadikan satuan detik ke bulan
+		year = 1900 + ltm->tm_year;	//2021	   //Menjadikan satuan detik ke tahun
 	}
 
 	*selisih = i;					  //tanda "*" adalah menandai variable return menggunakan address
@@ -69,25 +69,25 @@ void tanggalSelisih(string *tanggal, string *bulan, string *tahun, int *selisih)
 	*tahun = itoa(year, buffer, 10);
 }
 
-string formatAngka(int angka, string perantara = ".")
+string formatAngka(int angka, string perantara = ".") //syifa //formatAngka(seribu)
 {
 	stringstream ss;				   //typedata stringstream untuk merecord data yang masuk
 	ss << angka;					   //value dari variable angka
 	string output = ss.str();		   //fungsi "str()" merubah value dari streamstring ke string
-	int inspost = output.length() - 3; //"length()" menghitung banyaknya baris string dengan keluaran int
+	int inspost = output.length() - 3; //"length()" menghitung banyaknya baris string dengan keluaran int ... 1.000
 	while (inspost > 0)				   //berulang hingga keadaan false
 	{
 		output.insert(inspost, perantara); //meletakan value dari variable perantara ke baris ke 3 (inspost)
 		inspost -= 3;					   //mengurangi 3 baris dari value inspost, ini yang akan menjadikan keadaan berulang
 	}
-	return output; //mengembalikan  nilai output yang sudah di insert value dari variable perantara
+	return output; //mengembalikan  nilai output yang sudah di insert value dari variable perantara //1.000
 }
 
-void funcFile(string file, string jam)
+void funcFile(string file, string jam) //funcFike(file,jam)
 {
 	ifstream lihatFile;
-	lihatFile.open(file.c_str());
-	MyFile.open(file.c_str(), ios_base::app); //membuka file tanggal sekarang
+	lihatFile.open(file.c_str());//5-1-2021
+	MyFile.open(file.c_str(), ios_base::app); //membuka file tanggal sekarang 
 	if (!lihatFile)							  //kondisi jika  file tidak ada
 	{
 		cout << "File tidak ditemukan\n";
@@ -302,7 +302,7 @@ void funcMenabung(int uangDiTabung){
 void funcPlanning(string h, string b, string t, int slsh, string file, string skrg)
 {
 
-	if (pilihan == '1')
+	if (pilihan == '1') //plann 1bulan
 	{
 		slsh = 30;
 	pilihan1:
@@ -314,13 +314,14 @@ void funcPlanning(string h, string b, string t, int slsh, string file, string sk
 		// Planning Transportasi
 		cout << "Input uang saku bulanan = ";
 		cin >> uangBulanan;
-		cout << "Apakah benar uang bulanan anda sebesar Rp" << formatAngka(uangBulanan) << " ?" << endl;
+		cout << "Apakah benar uang bulanan anda sebesar Rp" << formatAngka(uangBulanan) << " ?" ;
 		cout << "(Y/T) = ";
 		cin >> pilihan;
 		if (pilihan == 'T' || pilihan == 't')
 		{
 			cout << "Silahkan input kembali uang bulanan anda dengan benar!" << endl;
 			Sleep(1500);
+			system("cls");
 			goto pilihan1;
 		}
 	}
@@ -344,6 +345,7 @@ void funcPlanning(string h, string b, string t, int slsh, string file, string sk
 		{
 			cout << "Silahkan input kembali uang bulanan anda dengan benar!" << endl;
 			Sleep(1500);
+			system("cls");
 			goto pilihan2;
 		}
 	}
@@ -402,7 +404,8 @@ void funcPlanning(string h, string b, string t, int slsh, string file, string sk
 					porsiMakanFav++;
 				}
 				porsiMakanFav -= 1;
-				uangSisa -= (hargaMakanMurah * (porsiMakanMurah -= porsiMakanFav)) + (hargaMakanFav * porsiMakanFav);
+				uangMknFav = uangSisa - ((hargaMakanMurah * (porsiMakanMurah -= porsiMakanFav)) + (hargaMakanFav * porsiMakanFav));
+				//uangSisa -= (hargaMakanMurah * (porsiMakanMurah -= porsiMakanFav)) + (hargaMakanFav * porsiMakanFav);
 				MyFile << "_________________________________________________________________\n";
 				MyFile << "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n";
 				MyFile << "|Atau anda juga bisa makan sederhana " << porsiMakanMurah << "x dan makan favorite " << porsiMakanFav << "x\t|\n";
