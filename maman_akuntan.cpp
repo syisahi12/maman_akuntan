@@ -1,4 +1,4 @@
-#include <iostream>  //
+#include <iostream>	 //
 #include <stdio.h>	 //
 #include <stdlib.h>	 //untuk fungsi command yang berkaitan dengan CMD (command prompt) seperti "cls"
 #include <conio.h>	 //untuk fungsi Sleep()
@@ -37,7 +37,7 @@ void tanggal(string *skrg, string *jam) //Syifa
 	string min_tmp = itoa(min, buffer, 10);
 
 	string sekarang_tmp = tanggal + "-" + bulan + "-" + tahun; //18-06-2002
-	string jam_tmp = hour_tmp + ":" + min_tmp; //18:00
+	string jam_tmp = hour_tmp + ":" + min_tmp;				   //18:00
 	*skrg = sekarang_tmp;
 	*jam = jam_tmp;
 }
@@ -58,9 +58,9 @@ void tanggalSelisih(string *tanggal, string *bulan, string *tahun, int *selisih)
 		int tglSelisih = 60 * 60 * 24 * i; //Merubah hari ke satuan detik
 		time_t now = time(0) + tglSelisih; //Menambahkan satuan detik hari yang akan datang ke waktu sekarang
 		tm *ltm = localtime(&now);		   //Mencari tanggal dari variable "now" dimana itu adalah mencari selisih tanggal ke akhir bulan
-		day = ltm->tm_mday;	//29,30,31,1			   //Menjadikan satuan detik ke tanggal
-		mon = 1 + ltm->tm_mon;	//jan,feb		   //Menjadikan satuan detik ke bulan
-		year = 1900 + ltm->tm_year;	//2021	   //Menjadikan satuan detik ke tahun
+		day = ltm->tm_mday;				   //29,30,31,1			   //Menjadikan satuan detik ke tanggal
+		mon = 1 + ltm->tm_mon;			   //jan,feb		   //Menjadikan satuan detik ke bulan
+		year = 1900 + ltm->tm_year;		   //2021	   //Menjadikan satuan detik ke tahun
 	}
 
 	*selisih = i;					  //tanda "*" adalah menandai variable return menggunakan address
@@ -86,8 +86,8 @@ string formatAngka(int angka, string perantara = ".") //syifa //formatAngka(seri
 void funcFile(string file, string jam) //funcFike(file,jam)
 {
 	ifstream lihatFile;
-	lihatFile.open(file.c_str());//5-1-2021
-	MyFile.open(file.c_str(), ios_base::app); //membuka file tanggal sekarang 
+	lihatFile.open(file.c_str());			  //5-1-2021
+	MyFile.open(file.c_str(), ios_base::app); //membuka file tanggal sekarang
 	if (!lihatFile)							  //kondisi jika  file tidak ada
 	{
 		cout << "File tidak ditemukan\n";
@@ -132,69 +132,85 @@ void funcFile(string file, string jam) //funcFike(file,jam)
 void planKendaraan(int uangBulanan, int jarak, int *uangSisa, int hari = 30)
 {
 	int jmlMinggu;
-	float hitungBensin, hargaBensin;
+	float hitungBensin, hargaBensin = 7650;
 	string kendaraan;
 	jmlMinggu = hari / 7;
-	cout << "Harga bensin yang kamu pakai sekarang = ";
-	cin >> hargaBensin;
-nitih1:
-	cout << "Motor / Mobil = ";
-	cin >> kendaraan;
-	if (kendaraan == "Motor" || kendaraan == "motor")
+	cout << pilihan;
+	if (pilihan == 't' || pilihan == 'T')
 	{
-
-		// menulis ke file
-		MyFile << "Info: Anda mengendarai motor dengan 1L BBM = 50KM\n";
+		cout << "Kamu bebas uang BBM\n";
+		MyFile << "Info: Anda bebas uang BBM\n";
 		MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
-		hitungBensin = (jarak * 2 * (hari - jmlMinggu)) / 50;
-		MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP 1 bulan\n";
-		hitungBensin *= hargaBensin;
-		MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hitungBensin) << "/Bulan\n";
-		if (uangBulanan >= hitungBensin)
-		{
-			uangBulanan -= hitungBensin;
-			MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
-			MyFile << "===========================================================================" << endl
-				   << endl;
-		}
-		else if (uangBulanan <= hitungBensin)
-		{
-			uangBulanan -= hitungBensin;
-			MyFile << "Uang bulanan anda tidak cukup untuk membeli bensin selama 1bulan PP kampus.\nAnda harus menambah Rp" << formatAngka(uangBulanan * -1) << endl;
-			MyFile << "===========================================================================" << endl
-				   << endl;
-		}
-		*uangSisa = uangBulanan;
-	}
-	else if (kendaraan == "Mobil" || kendaraan == "mobil")
-	{
-
-		// menulis ke file
-		MyFile << "Info: Anda mengendarai motor dengan 1L BBM = 15KM\n";
-		MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
-		hitungBensin = jarak * 2 * hari / 15;
-		MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP kampus 1bulan\n";
-		hitungBensin *= hargaBensin;
-		MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hitungBensin) << "/Bulan\n";
-		uangBulanan -= hitungBensin;
-		if (uangBulanan >= hitungBensin)
-		{
-			MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
-			MyFile << "===========================================================================" << endl
-				   << endl;
-		}
-		else if (uangBulanan <= hitungBensin)
-		{
-			MyFile << "Uang bulanan anda tidak cukup untuk membeli bensin selama 1bulan PP kampus.\nAnda harus menambah Rp" << formatAngka(uangBulanan * -1) << endl;
-			MyFile << "===========================================================================" << endl
-				   << endl;
-		}
+		MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
+		MyFile << "Anda berhemat Rp" << formatAngka(hargaBensin *= (hitungBensin = (jarak * 2 * (hari - jmlMinggu)) / 50)) << endl;
+		MyFile << "Dengan Asumsi bahwa kamu menggunakan bensin pertalite "<<hitungBensin<<"L untuk PP 1bulan.\n";
+		MyFile << "===========================================================================" << endl
+			   << endl;
 		*uangSisa = uangBulanan;
 	}
 	else
 	{
-		cout << "Maaf kendaraan yang anda inputkan salah.Silahkan coba lagi.\n\n";
-		goto nitih1;
+		cout << "Harga bensin yang kamu pakai sekarang = ";
+		cin >> hargaBensin;
+	nitih1:
+		cout << "Motor / Mobil = ";
+		cin >> kendaraan;
+		if (kendaraan == "Motor" || kendaraan == "motor")
+		{
+
+			// menulis ke file
+			MyFile << "Info: Anda mengendarai motor dengan 1L BBM = 50KM\n";
+			MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
+			hitungBensin = (jarak * 2 * (hari - jmlMinggu)) / 50;
+			MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP 1 bulan\n";
+			hitungBensin *= hargaBensin;
+			MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hitungBensin) << "/Bulan\n";
+			if (uangBulanan >= hitungBensin)
+			{
+				uangBulanan -= hitungBensin;
+				MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
+				MyFile << "===========================================================================" << endl
+					   << endl;
+			}
+			else if (uangBulanan <= hitungBensin)
+			{
+				uangBulanan -= hitungBensin;
+				MyFile << "Uang bulanan anda tidak cukup untuk membeli bensin selama 1bulan PP kampus.\nAnda harus menambah Rp" << formatAngka(uangBulanan * -1) << endl;
+				MyFile << "===========================================================================" << endl
+					   << endl;
+			}
+			*uangSisa = uangBulanan;
+		}
+		else if (kendaraan == "Mobil" || kendaraan == "mobil")
+		{
+
+			// menulis ke file
+			MyFile << "Info: Anda mengendarai motor dengan 1L BBM = 15KM\n";
+			MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
+			hitungBensin = jarak * 2 * hari / 15;
+			MyFile << "Anda membutuhkan bensin " << hitungBensin << "L untuk PP kampus 1bulan\n";
+			hitungBensin *= hargaBensin;
+			MyFile << "Jadi uang bensin yang diperlukan adalah Rp" << formatAngka(hitungBensin) << "/Bulan\n";
+			uangBulanan -= hitungBensin;
+			if (uangBulanan >= hitungBensin)
+			{
+				MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangBulanan) << endl;
+				MyFile << "===========================================================================" << endl
+					   << endl;
+			}
+			else if (uangBulanan <= hitungBensin)
+			{
+				MyFile << "Uang bulanan anda tidak cukup untuk membeli bensin selama 1bulan PP kampus.\nAnda harus menambah Rp" << formatAngka(uangBulanan * -1) << endl;
+				MyFile << "===========================================================================" << endl
+					   << endl;
+			}
+			*uangSisa = uangBulanan;
+		}
+		else
+		{
+			cout << "Maaf kendaraan yang anda inputkan salah.Silahkan coba lagi.\n\n";
+			goto nitih1;
+		}
 	}
 }
 
@@ -271,32 +287,33 @@ int menabungSaham(int uangSisa)
 	MyFile << endl;
 }
 
-void funcMenabung(int uangDiTabung){
+void funcMenabung(int uangDiTabung)
+{
 	menabungEmas(uangDiTabung);
+	MyFile << endl;
+	if (uangDiTabung >= 100000)
+	{
+		menabungReksaDana(uangDiTabung);
 		MyFile << endl;
-		if (uangDiTabung >= 100000)
-		{
-			menabungReksaDana(uangDiTabung);
-			MyFile << endl;
-		}
-		else
-		{
-			MyFile << "Uang sisa kamu tidak bisa untuk menabung Reksadana (Minimal Rp100.000)" << endl;
-		}
+	}
+	else
+	{
+		MyFile << "Uang sisa kamu tidak bisa untuk menabung Reksadana (Minimal Rp100.000)" << endl;
+	}
 
-		if (uangDiTabung >= 200000)
-		{
-			menabungSaham(uangDiTabung);
-			MyFile << endl;
-			MyFile << "===========================================================================" << endl
-				   << endl;
-		}
-		else
-		{
-			MyFile << "Uang sisa kamu tidak bisa untuk menabung Saham (Minimal Rp200.000)" << endl;
-		}
+	if (uangDiTabung >= 200000)
+	{
+		menabungSaham(uangDiTabung);
+		MyFile << endl;
 		MyFile << "===========================================================================" << endl
 			   << endl;
+	}
+	else
+	{
+		MyFile << "Uang sisa kamu tidak bisa untuk menabung Saham (Minimal Rp200.000)" << endl;
+	}
+	MyFile << "===========================================================================" << endl
+		   << endl;
 }
 
 void funcPlanning(string h, string b, string t, int slsh, string file, string skrg)
@@ -314,7 +331,7 @@ void funcPlanning(string h, string b, string t, int slsh, string file, string sk
 		// Planning Transportasi
 		cout << "Input uang saku bulanan = ";
 		cin >> uangBulanan;
-		cout << "Apakah benar uang bulanan anda sebesar Rp" << formatAngka(uangBulanan) << " ?" ;
+		cout << "Apakah benar uang bulanan anda sebesar Rp" << formatAngka(uangBulanan) << " ?";
 		cout << "(Y/T) = ";
 		cin >> pilihan;
 		if (pilihan == 'T' || pilihan == 't')
@@ -360,12 +377,7 @@ void funcPlanning(string h, string b, string t, int slsh, string file, string sk
 	}
 	else
 	{
-		cout << "Kamu bebas uang BBM\n";
-		MyFile << "Info: Anda bebas uang BBM\n";
-		MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
-		MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangSisa=uangBulanan) << endl;
-		MyFile << "===========================================================================" << endl
-			   << endl;
+		planKendaraan(uangBulanan, jarak, &uangSisa, slsh);
 	}
 	if (uangSisa > 0)
 	{
