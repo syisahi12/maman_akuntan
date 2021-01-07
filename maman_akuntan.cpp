@@ -361,6 +361,11 @@ void funcPlanning(string h, string b, string t, int slsh, string file, string sk
 	else
 	{
 		cout << "Kamu bebas uang BBM\n";
+		MyFile << "Info: Anda bebas uang BBM\n";
+		MyFile << "Jarak kampus anda adalah " << jarak << "KM.\n";
+		MyFile << "Maka uang sisa anda adalah Rp" << formatAngka(uangSisa=uangBulanan) << endl;
+		MyFile << "===========================================================================" << endl
+			   << endl;
 	}
 	if (uangSisa > 0)
 	{
