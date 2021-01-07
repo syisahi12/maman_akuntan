@@ -135,7 +135,6 @@ void planKendaraan(int uangBulanan, int jarak, int *uangSisa, int hari = 30)
 	float hitungBensin, hargaBensin = 7650;
 	string kendaraan;
 	jmlMinggu = hari / 7;
-	cout << pilihan;
 	if (pilihan == 't' || pilihan == 'T')
 	{
 		cout << "Kamu bebas uang BBM\n";
