@@ -354,7 +354,7 @@ void funcPlanning(string h, string b, string t, int slsh, string file, string sk
 		// Planning Transportasi
 		cout << "Input uang saku saat ini = ";
 		cin >> uangBulanan;
-		cout << "Apakah benar uang bulanan anda sebesar Rp" << formatAngka(uangBulanan) << " ?" << endl;
+		cout << "Apakah benar uang bulanan anda sebesar Rp" << formatAngka(uangBulanan) << " ?";
 		cout << "(Y/T) = ";
 		cin >> pilihan;
 		if (pilihan == 'T' || pilihan == 't')
@@ -523,6 +523,7 @@ menu:
 		cout << "============================================================================================================================" << endl;
 		cout << "Untuk kembali ke menu. Tekan (Enter)" << endl;
 		getch();
+		system("cls");
 		goto menu;
 		break;
 	}
