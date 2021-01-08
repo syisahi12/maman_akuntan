@@ -1,7 +1,7 @@
 #include <iostream>	 //
 #include <stdio.h>	 //
 #include <stdlib.h>	 //untuk fungsi command yang berkaitan dengan CMD (command prompt) seperti "cls"
-#include <conio.h>	 //untuk fungsi Sleep()
+#include <conio.h>	 //getch()
 #include <windows.h> //untuk fungsi Sleep()
 #include <sstream>	 //untuk fungsi string stream pada pembuatan format rupiah di func formatAngka()
 #include <string.h>	 //untuk menambahkan fungsi untuk string seperti c_str()
@@ -526,5 +526,9 @@ menu:
 		system("cls");
 		goto menu;
 		break;
+	default:
+		cout<<"Menu tidak ada , silahkan input menu lagi!\n";
+		system("cls");
+		goto menu;
 	}
 }
